@@ -28,9 +28,9 @@ try:
 
     # New Save
     if start_action == 1:
-        save_data = funcs.load_data(save_data_file)
+        result, save_data = funcs.load_data(save_data_file)
 
-        char_id = len(save_data) - 1
+        char_id = len(save_data) + 1
 
         fname = input("\nEnter your character's first name: ")
         lname = input("\nEnter your character's last name: ")
@@ -76,7 +76,7 @@ try:
         
     # Load save
     elif start_action == 2:
-        all_saves = funcs.load_data(save_data_file)
+        result, all_saves = funcs.load_data(save_data_file)
         for i , name in enumerate(all_saves.keys(), 1):
             print(f"{i}. {name}")
 
