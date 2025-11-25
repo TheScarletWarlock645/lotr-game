@@ -76,13 +76,28 @@ try:
         
     # Load save
     elif start_action == 2:
-        result, all_saves = funcs.load_data(save_data_file)
-        for i , name in enumerate(all_saves.keys(), 1):
-            print(f"{i}. {name}")
+        result, save_data = funcs.load_data(save_data_file)
 
-##CONTINUE HERE, FINISH MAKING SAVE LOADING
-#TODO
+        if not save_data or save_data == "{}":
+            print("ERROR: No saves found!")
+            exit()
+        else:
+            print()
+            for key, character in save_data.items():
+                full_name = f"{character['fname']} {character['lname']}".title()
+                print(f"{key}. {full_name}")
 
+            while True:
+                selected_save = input("\nSelect a save (number): ")
+                if selected_save in save_data:
+                    funcs.load_save(selected_save)
+                    break
+                else:
+                    print("ERROR: Invalid save selection!")
+                    continue
+            
+            result = funcs.load_save(selected_save)
+            
     # Exit game
     elif start_action == 3:
         exit("\nBye! Come back soon!\n")
