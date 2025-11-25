@@ -70,7 +70,7 @@ try:
         if new_save == 0:
             start_now_query = input("\nSuccessfully made new save! Would you like to start now? (Y/n) ").lower()
             if start_now_query == "" or start_now_query == "y":
-                funcs.load_save(char_id)
+                funcs.load_save(save_data_file, char_id)
             else:
                 exit("\nBye :)\n")
         
@@ -90,14 +90,14 @@ try:
             while True:
                 selected_save = input("\nSelect a save (number): ")
                 if selected_save in save_data:
-                    funcs.load_save(selected_save)
+                    funcs.load_save(save_data_file, selected_save)
                     break
                 else:
                     print("ERROR: Invalid save selection!")
                     continue
             
-            result = funcs.load_save(selected_save)
-            
+            funcs.load_save(save_data_file, selected_save)
+
     # Exit game
     elif start_action == 3:
         exit("\nBye! Come back soon!\n")

@@ -126,5 +126,11 @@ def writer(path):
             return 1
         continue
 
-def load_save(id):
-    pass
+def load_save(save_file, char_id):
+    os.environ['LOADED_SAVE'] = str(id)
+    save_file_ex = os.path.abspath(save_file)
+    all_saves = load_data(save_file_ex)
+
+    game_section = all_saves[char_id["game_section"]]
+
+    os.system(f"python3 section_{game_section}")
