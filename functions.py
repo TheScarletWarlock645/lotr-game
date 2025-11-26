@@ -133,4 +133,4 @@ def load_save(save_file, char_id):
 
     game_section = all_saves[char_id["game_section"]]
 
-    os.system(f"python3 section_{game_section}")
+    os.system(f"python3 section_{game_section}.py")
