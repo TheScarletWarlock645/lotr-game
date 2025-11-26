@@ -65,7 +65,6 @@ try:
                     continue
 
                 break
-
         new_save = funcs.new_save(save_data_file, char_id ,fname, lname, race, char_class, game_section, gender)
         if new_save == 0:
             start_now_query = input("\nSuccessfully made new save! Would you like to start now? (Y/n) ").lower()
@@ -89,6 +88,7 @@ try:
 
             while True:
                 selected_save = input("\nSelect a save (number): ")
+                print(selected_save)
                 if selected_save in save_data:
                     funcs.load_save(save_data_file, selected_save)
                     break

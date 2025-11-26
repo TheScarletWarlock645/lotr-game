@@ -168,7 +168,7 @@ def writer(path):
         continue
 
 def load_save(save_file, char_id):
-    os.environ['LOADED_SAVE'] = str(id)
+    os.environ['LOADED_SAVE'] = str(char_id)
     save_file_ex = os.path.abspath(save_file)
     _, all_saves = load_data(save_file_ex)
 
