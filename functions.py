@@ -1,4 +1,4 @@
-#file: functions.py
+#File: functions.py
 #Written by: Angelo Semertsidis
 #License: GNU GPLv3
 #Year: 2025
@@ -112,10 +112,51 @@ def new_save(save_path, id, fname, lname, race, char_class, game_section, gender
 @error_listener
 def writer(path):
     file_path = os.path.abspath(path)
+
+    def del_line(filename, line_number_to_delete):
+        with open(filename, "r") as f:
+            lines = f.readlines()
+
+        index_to_delete = line_number_to_delete - 1 
+
+        with open(filename, "w") as f:
+            for index, line in enumerate(lines):
+                if index != index_to_delete:
+                    f.write(line)
+
+    def printer(path):
+        file_path = os.path.abspath(path)
+        try:
+            with open(file_path, "r") as f:
+                for line in f:
+                    print(line, end="")
+        except FileNotFoundError:
+            return 3
+        except Exception as e:
+            print(e)
+            return 1
+
     while True:
-        line = input(">> ")
-        if line == "\end":
+        line = input(f"[{path}] >> ")
+
+        # Commands in the text writer
+        if line == "\end": # Exit text writer
             return 0
+        elif line == "--print" or line == "-p": # Print whole file
+            printer(path)
+            continue
+        elif "--delete" in line or "-d" in line: # Delete line
+            _, ln = line.split()
+
+            if ln.lower() == "a": # Delete entire contents of file
+                with open(file_path, "w") as f:
+                    f.seek(0)
+                    f.truncate()
+                continue
+            del_line(file_path, int(ln))
+            continue
+        elif line == "":
+            continue
 
         line_processed = line + "\n"
         try:
@@ -129,8 +170,47 @@ def writer(path):
 def load_save(save_file, char_id):
     os.environ['LOADED_SAVE'] = str(id)
     save_file_ex = os.path.abspath(save_file)
-    all_saves = load_data(save_file_ex)
+    _, all_saves = load_data(save_file_ex)
 
-    game_section = all_saves[char_id["game_section"]]
+    char_data = all_saves[char_id]
+    game_section = char_data["game_section"]
 
     os.system(f"python3 section_{game_section}.py")
+
+def load_save_data(char_id, path):
+    _, all_char_data = load_data(path)
+
+    char_data = all_char_data[char_id]
+
+    fname = char_data["fname"]
+    lname = char_data["lname"]
+    race = char_data["race"]
+    char_class = char_data["class"]
+    gender = char_data["gender"]
+    game_section = char_data["game_section"]
+
+    return 0, fname, lname, race, char_class, gender, game_section
+
+def pronouns(gender):
+    if gender == None:
+        pers_pronoun = "they"
+        poss_pronoun_1 = "their"
+        poss_pronoun_2 = "theirs"
+        obj_pronoun = "them"
+    elif gender.lower() == "m":
+        pers_pronoun = "he"
+        poss_pronoun_1 = "his"
+        poss_pronoun_2 = "his"
+        obj_pronoun = "him"
+    elif gender.lower() == "f":
+        pers_pronoun = "she"
+        poss_pronoun_1 = "hers"
+        poss_pronoun_2 = "hers"
+        obj_pronoun = "her"
+    else:
+        pers_pronoun = "they"
+        poss_pronoun_1 = "their"
+        poss_pronoun_2 = "theirs"
+        obj_pronoun = "them"
+
+    return 0, pers_pronoun, poss_pronoun_1, poss_pronoun_2, obj_pronoun
