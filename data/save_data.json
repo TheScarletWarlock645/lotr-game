@@ -1,1 +1,18 @@
-{}
+{
+    "1": {
+        "fname": "test",
+        "lname": "test",
+        "race": 1,
+        "class": 11,
+        "gender": null,
+        "game_section": 1
+    },
+    "2": {
+        "fname": "test",
+        "lname": "test",
+        "race": 1,
+        "class": 1,
+        "gender": null,
+        "game_section": 1
+    }
+}
