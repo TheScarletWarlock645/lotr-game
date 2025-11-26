@@ -1,4 +1,4 @@
-#file: main.py
+#File: main.py
 #Written by: Angelo Semertsidis
 #License: GNU GPLv3
 #Year: 2025
@@ -10,7 +10,7 @@ save_data_file = "./data/save_data.json"
 game_data_file =  "./data/game_data.json"
 
 try:
-    result, game_data = funcs.load_data(game_data_file) # Loads game data from file
+    _, game_data = funcs.load_data(game_data_file) # Loads game data from file
     print("\n** WELCOME TO MIDDLE EARTH! **\n")
 
     start_action_choices = ["New save", "Load save", "Exit"]
@@ -28,7 +28,7 @@ try:
 
     # New Save
     if start_action == 1:
-        result, save_data = funcs.load_data(save_data_file)
+        _, save_data = funcs.load_data(save_data_file)
 
         char_id = len(save_data) + 1
 
@@ -47,7 +47,7 @@ try:
             print(f"{i}. {name}")
         char_class = int(input("Please choose a class (number): "))
 
-        gender = input("\nChoose a gender (optional): ")
+        gender = input("\nChoose a gender (optional)(initial only): ")
         if gender == "":
             gender = None
 
@@ -70,13 +70,13 @@ try:
         if new_save == 0:
             start_now_query = input("\nSuccessfully made new save! Would you like to start now? (Y/n) ").lower()
             if start_now_query == "" or start_now_query == "y":
-                funcs.load_save(save_data_file, char_id)
+                funcs.load_save(save_data_file, str(char_id))
             else:
                 exit("\nBye :)\n")
         
     # Load save
     elif start_action == 2:
-        result, save_data = funcs.load_data(save_data_file)
+        _, save_data = funcs.load_data(save_data_file)
 
         if not save_data or save_data == "{}":
             print("ERROR: No saves found!")
@@ -95,8 +95,6 @@ try:
                 else:
                     print("ERROR: Invalid save selection!")
                     continue
-            
-            funcs.load_save(save_data_file, selected_save)
 
     # Exit game
     elif start_action == 3:
